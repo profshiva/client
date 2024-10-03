@@ -1,40 +1,76 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
+import AppBar from "./components/AppBar.js";
+import TransactionForm from "./components/TransactionForm.js";
+
+
+// const InitialForm={
+//           amount :0,
+//           description:" ",
+//           date:" ",}
 
 function App() {
-  const[form,setForm] =useState({
-   amount :0,
-   description:" ",
-   date:" ",
-
-  })
+  // const[form,setForm] =useState(InitialForm)
 
 
-  async function handleSubmit(e){
-    e.preventDefault();
-    const res=await fetch("http://localhost:4000/transaction",{
-          method:"POST",
-          body: form,
-    });
-    console.log(res);
-  }
+  // async function handleSubmit(e){
+  //   e.preventDefault();
+  //   const req=await fetch("http://localhost:4000/transaction",{
+  //         method:"POST",
+  //         body: JSON.stringify(form),
+  //         headers:{'content-type':"application/json"},
+  //   });
+  //     const data =await req.json();
+    //  if(req.ok){
+    //   // fetchTransactions();
+    //   setForm(InitialForm);
+    //  }
+
+  //   console.log(data);
+  // }
+const [transactions,setTransactions]=useState([])
+
+
+
+  useEffect(()=>{
+     fetchTransactions();
+  },[]);
+
+  async function fetchTransactions()
+    {
+    const res=await fetch("http://localhost:4000/transaction");
+    const {data} =await res.json();
+    setTransactions(data);
+    console.log(data);
+    }
  
-  function handleInput(e){
-    
-    setForm({...form,[e.target.name]:e.target.value})
-  }
   
   return (
     <div >
-      <form onSubmit={handleSubmit}>
-      <input type="number" name ="amount" value ={form.amount} onChange={handleInput} placeholder="Enter Transaction Amount"/>
-      <input type="text" name ="description" value ={form.description} onChange={handleInput}placeholder="Enter Transaction Detail"/>
-      <input type="date" name ="date" value ={form.date} onChange={handleInput}/>
-      <button type="submit">Submit</button>
+      <AppBar/>
+      <TransactionForm />
 
-
-      </form>
-    </div>
-  );
-}
+    <div>
+          <section>
+            <table>
+              <thead>
+                <th>Amount</th>
+                <th>Description</th>
+                {/* <th>Date</th> */}
+              </thead>
+              <tbody>
+              {transactions.map((trx)=>(
+               <tr key={trx._id}>
+                <td>{trx.amount}</td>
+                <td>{trx.description}</td>
+                {/* <td>{trx.date}</td> */}
+               </tr>
+               ))}
+              </tbody>
+            </table>
+          </section>
+      </div>
+     
+      </div>
+)};
 
 export default App;
