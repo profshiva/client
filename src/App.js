@@ -55,14 +55,14 @@ const [transactions,setTransactions]=useState([])
               <thead>
                 <th>Amount</th>
                 <th>Description</th>
-                {/* <th>Date</th> */}
+                <th>Date</th> 
               </thead>
               <tbody>
               {transactions.map((trx)=>(
                <tr key={trx._id}>
                 <td>{trx.amount}</td>
                 <td>{trx.description}</td>
-                {/* <td>{trx.date}</td> */}
+                <td>{trx.date}</td> 
                </tr>
                ))}
               </tbody>

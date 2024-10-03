@@ -17,8 +17,8 @@ const InitialForm={
 
 export default function TransactionForm() {
     
-    // const [value, setValue] = useState(dayjs(Date.now()));
-    const value= Date.now();
+    const [value, setValue] = useState(dayjs(Date.now()));
+    
     const[form,setForm] =useState(InitialForm)
     
     function handleInput(e){
@@ -61,8 +61,8 @@ export default function TransactionForm() {
         <DatePicker
           label="Transaction Date"
           value={value}
-        //   onChange={(newValue) => setValue(newValue)}
-          onChange={handleDate}
+        onChange={(newValue) => setValue(newValue)}
+        //   onChange={handleDate}
           sx={{marginRight:5}}
          
         />
